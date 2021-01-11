@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\models\Account;
+use App\Models\Ledger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,11 +27,18 @@ class HomeController extends Controller
     public function index()
     {
         $accounts = Account::where('user_id', Auth::user()->id)->get();
+        $data = NULL;
+
+        foreach($accounts as $account)
+        {
+            $data['income'][$account->currency_code] = $account->income();
+            $data['expenses'][$account->currency_code] = $account->expenses();
+        }
 
         if(Auth::user()->roles[0]->role_name == "administrator"){
             return redirect()->route('admin.home');
         }else{
-            return view('member.home', compact('accounts') );
+            return view('member.home', compact('accounts', 'data') );
         }
     }
 }

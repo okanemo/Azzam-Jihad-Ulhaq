@@ -31,8 +31,8 @@
                                         <h5 class="card-title">{{$account->name}}</h5>
                                         <p class="card-text">{{$account->currency_code}} - {{$account->currency_desc->description}}</p>
                                         <a href="#" class="btn btn-sm btn-primary">Detail</a>
-                                        <a href="#" class="btn btn-sm btn-success">Income</a>
-                                        <a href="#" class="btn btn-sm btn-danger">Expenses</a>
+                                        <a href="{{route('ledger.create_income', $account->id)}}" class="btn btn-sm btn-success">Income</a>
+                                        <a href="{{route('ledger.create_expenses', $account->id)}}" class="btn btn-sm btn-danger">Expenses</a>
                                     </div>
                                 </div>
                             </div>
