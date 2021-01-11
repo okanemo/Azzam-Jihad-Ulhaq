@@ -31,6 +31,7 @@ class AccountController extends Controller
     }
 
     // Ledger Controller
+
     public function create_income($id)
     {
         $data['account_id'] = $id;
@@ -39,7 +40,6 @@ class AccountController extends Controller
 
     public function store_income(Request $request)
     {
-        // return $request;
         Ledger::create([
             'account_id' => $request->account_id,
             'amount' => $request->amount,
@@ -47,5 +47,22 @@ class AccountController extends Controller
             'transaction_name' => $request->transaction_name
         ]);
         return redirect()->route('home')->with('message-success', 'Income has been recorded');
+    }
+
+    public function create_expenses($id)
+    {
+        $data['account_id'] = $id;
+        return view('ledger.create_expenses', compact('data'));
+    }
+
+    public function store_expenses(Request $request)
+    {
+        Ledger::create([
+            'account_id' => $request->account_id,
+            'amount' => $request->amount,
+            'type' => 2,
+            'transaction_name' => $request->transaction_name
+        ]);
+        return redirect()->route('home')->with('message-success', 'Expenses has been recorded');
     }
 }

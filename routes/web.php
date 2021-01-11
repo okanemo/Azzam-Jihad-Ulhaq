@@ -27,4 +27,6 @@ Route::prefix('account')->name('account.')->group(function () {
 Route::prefix('ledger')->name('ledger.')->group(function () {
     Route::get('{id}/create_income', 'AccountController@create_income')->name('create_income');
     Route::post('store_income', 'AccountController@store_income')->name('store_income');
+    Route::get('{id}/create_expenses', 'AccountController@create_expenses')->name('create_expenses');
+    Route::post('store_expenses', 'AccountController@store_expenses')->name('store_expenses');
 });
