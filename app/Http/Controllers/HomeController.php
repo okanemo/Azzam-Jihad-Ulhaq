@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,10 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $accounts = Account::where('user_id', Auth::user()->id)->get();
+
         if(Auth::user()->roles[0]->role_name == "administrator"){
             return redirect()->route('admin.home');
         }else{
-            return view('member.home');
+            return view('member.home', compact('accounts'));
         }
     }
 }
