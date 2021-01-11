@@ -28,17 +28,17 @@
                             <div class="form-group row">
                                 <div class="col-md-6">
                                     <label for="">Start date</label>
-                                    <input type="date" name="start_date" class="form-control">
+                                    <input type="date" name="start_date" class="form-control" value="{{$data['start_date']}}">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="">End date</label>
-                                    <input type="date" name="end_date" class="form-control">
+                                    <input type="date" name="end_date" class="form-control" value="{{$data['end_date']}}">
                                 </div>
 
                                 <div class="col-md-12 mt-3">
                                     <button class="btn btn-sm btn-block btn-primary">Filter</button>
-                                    <button class="btn btn-sm btn-block btn-danger">Delete Filter</button>
+                                    <a href="{{ route('home') }}" class="btn btn-sm btn-block btn-danger">Delete Filter</a>
                                 </div>
                             </div>
                         </form>
