@@ -17,12 +17,12 @@ class Administrator
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-        return $next($request);
+        // return $next($request);
         if($user->roles[0]->role_name == "administrator"){
             return $next($request);
         }else{
-            // return route('home');
-            abort(503);
+            return redirect()->route('home');
+            // abort(503);
         }
     }
 }

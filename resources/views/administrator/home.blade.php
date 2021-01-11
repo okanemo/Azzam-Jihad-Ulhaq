@@ -14,8 +14,31 @@
                         </div>
                     @endif
 
-                    You are logged in! <br>
-                    {{Auth::user()}}
+                    Hi {{auth::user()->name}}, you are logged in!
+                </div>
+            </div>
+
+            <div class="card mt-5">
+                <div class="card-header">Your Accounts <a href="{{route('account.create')}}" class="float-right btn btn-sm btn-primary">New Account</a></div>
+                <div class="card-body">
+                    @component('utilities.notification')
+                    @endcomponent
+                    <div class="row">
+                        @foreach ($accounts as $account)
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{$account->name}}</h5>
+                                        <p class="card-text">{{$account->currency_code}} - {{$account->currency_desc->description}}</p>
+                                        <a href="#" class="btn btn-sm btn-primary">Detail</a>
+                                        <a href="#" class="btn btn-sm btn-success">Income</a>
+                                        <a href="#" class="btn btn-sm btn-danger">Expenses</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+
                 </div>
             </div>
         </div>

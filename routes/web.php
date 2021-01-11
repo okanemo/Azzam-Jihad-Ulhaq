@@ -23,3 +23,8 @@ Route::prefix('account')->name('account.')->group(function () {
     Route::get('create', 'AccountController@create')->name('create');
     Route::post('store', 'AccountController@store')->name('store');
 });
+
+Route::prefix('ledger')->name('ledger.')->group(function () {
+    Route::get('{id}/create_income', 'AccountController@create_income')->name('create_income');
+    Route::post('store_income', 'AccountController@store_income')->name('store_income');
+});
