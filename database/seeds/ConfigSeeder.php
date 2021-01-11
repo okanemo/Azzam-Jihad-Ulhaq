@@ -25,9 +25,17 @@ class ConfigSeeder extends Seeder
         ]);
 
         // assign user to their respective roles
-        DB::table('user_role')->insert([
+        DB::table('role_user')->insert([
             ['user_id' => 1, 'role_id' => 1],
             ['user_id' => 2, 'role_id' => 2]
         ]);
+
+        // add currency
+        DB::table('currencies')->insert([
+            ['code' => 'USD', 'rate' => 1],
+            ['code' => 'JPY', 'rate' => 0.0096],
+            ['code' => 'IDR', 'rate' => 0.000071]
+        ]);
+
     }
 }
