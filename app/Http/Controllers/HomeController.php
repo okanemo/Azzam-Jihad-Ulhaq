@@ -30,11 +30,6 @@ class HomeController extends Controller
             return redirect()->route('admin.home');
         }
 
-        // if( isset($request->start_date) || isset($request->end_date))
-        // {
-        //     return $request;
-        // }
-
         $accounts = Account::where('user_id', Auth::user()->id)->get();
         $data = NULL;
 
