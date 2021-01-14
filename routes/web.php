@@ -22,6 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('account')->name('account.')->group(function () {
     Route::get('create', 'AccountController@create')->name('create');
     Route::post('store', 'AccountController@store')->name('store');
+    Route::get('/{id}/show', 'AccountController@show')->name('show');
 });
 
 Route::prefix('ledger')->name('ledger.')->group(function () {

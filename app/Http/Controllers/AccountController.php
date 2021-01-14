@@ -14,6 +14,8 @@ class AccountController extends Controller
         $this->middleware('auth');
     }
 
+    // Account Controller
+
     public function create()
     {
         return view("account.create");
@@ -28,6 +30,16 @@ class AccountController extends Controller
             'currency_code' => $request->currency_code,
         ]);
         return redirect()->route('home')->with('message-success', 'Account has been created successfully');
+    }
+
+    public function show ($id)
+    {
+        $data['account']    = Account::where('id', $id)->first();
+        // $data['transactions']['income']     = Ledger::where('account_id', $id)->where('type', 1)->get();
+        // $data['transactions']['expenses']   = Ledger::where('account_id', $id)->where('type', 2)->get();
+        $data['transactions']     = Ledger::where('account_id', $id)->get();
+        // return $data['transactions'];
+        return view('account.show', compact('data'));
     }
 
     // Ledger Controller
