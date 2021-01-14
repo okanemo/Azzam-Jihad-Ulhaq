@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -23,6 +23,7 @@ Route::prefix('account')->name('account.')->group(function () {
     Route::get('create', 'AccountController@create')->name('create');
     Route::post('store', 'AccountController@store')->name('store');
     Route::get('/{id}/show', 'AccountController@show')->name('show');
+    Route::post('transfer', 'AccountController@transfer')->name('transfer');
 });
 
 Route::prefix('ledger')->name('ledger.')->group(function () {

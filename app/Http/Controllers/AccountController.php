@@ -7,6 +7,9 @@ use App\Models\Currency;
 use App\Models\Ledger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+use function PHPSTORM_META\type;
 
 class AccountController extends Controller
 {
@@ -35,6 +38,7 @@ class AccountController extends Controller
 
     public function show ($id, Request $request)
     {
+        $data['accounts']         = Account::where('id', '!=', $id)->where('user_id', Auth::user()->id)->get();
         $data['account']          = Account::where('id', $id)->first();
         $data['transactions']     = Ledger::where('account_id', $id)->get();
 
@@ -50,6 +54,39 @@ class AccountController extends Controller
         }
 
         return view('account.show', compact('data'));
+    }
+
+    public function transfer(Request $request)
+    {
+        // return $request;
+        $account_from = Account::where('id', $request->account_from)->first();
+        $account_to = Account::where('id', $request->account_destination)->first();
+
+        DB::beginTransaction();
+        try {
+            // kurangi dari account from
+            Ledger::create([
+                'account_id' => $request->account_from,
+                'amount' => $request->transfer_amount,
+                'type' => 2,
+                'transaction_name' => 'Transfer to ' . $account_to->name . ' with rate (' . $account_from->currency_code . ' 1 = ' . $account_to->currency_code . ' ' . $request->currency_rate . ')',
+            ]);
+
+            Ledger::create([
+                'account_id' => $request->account_destination,
+                'amount' => $request->transfer_amount * $request->currency_rate,
+                'type' => 1,
+                'transaction_name' => 'Transfer from ' . $account_to->name . ' with rate (' . $account_from->currency_code . ' 1 = ' . $account_to->currency_code . ' ' . $request->currency_rate . ')',
+            ]);
+
+            DB::commit();
+            return redirect()->route('account.show', $request->account_from);
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return $th;
+            return redirect()->back();
+        }
     }
 
     // Ledger Controller

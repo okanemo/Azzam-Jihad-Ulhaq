@@ -118,7 +118,7 @@
                     @endcomponent
                     <div class="row">
                         @foreach ($accounts as $account)
-                            <div class="col-md-6">
+                            <div class="col-md-6 my-3">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">{{$account->name}}</h5>
