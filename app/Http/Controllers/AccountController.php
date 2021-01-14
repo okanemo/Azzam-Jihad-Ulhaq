@@ -76,7 +76,7 @@ class AccountController extends Controller
                 'account_id' => $request->account_destination,
                 'amount' => $request->transfer_amount * $request->currency_rate,
                 'type' => 1,
-                'transaction_name' => 'Transfer from ' . $account_to->name . ' with rate (' . $account_from->currency_code . ' 1 = ' . $account_to->currency_code . ' ' . $request->currency_rate . ')',
+                'transaction_name' => 'Transfer from ' . $account_from->name . ' with rate (' . $account_from->currency_code . ' 1 = ' . $account_to->currency_code . ' ' . $request->currency_rate . ')',
             ]);
 
             DB::commit();
