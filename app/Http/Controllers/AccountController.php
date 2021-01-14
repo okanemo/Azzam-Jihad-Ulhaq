@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\models\Account;
+use App\Models\Currency;
 use App\Models\Ledger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,13 +33,22 @@ class AccountController extends Controller
         return redirect()->route('home')->with('message-success', 'Account has been created successfully');
     }
 
-    public function show ($id)
+    public function show ($id, Request $request)
     {
-        $data['account']    = Account::where('id', $id)->first();
-        // $data['transactions']['income']     = Ledger::where('account_id', $id)->where('type', 1)->get();
-        // $data['transactions']['expenses']   = Ledger::where('account_id', $id)->where('type', 2)->get();
+        $data['account']          = Account::where('id', $id)->first();
         $data['transactions']     = Ledger::where('account_id', $id)->get();
-        // return $data['transactions'];
+
+        $currency_rate_from = Currency::where('code',$data['account']->currency_code)->first()->rate;
+
+        if (!is_null($request->currency)){
+            $currency_rate_to = Currency::where('code',$request->currency)->first();
+            $data['currency']   = $request->currency;
+            $data['currency_rate'] = $currency_rate_from / $currency_rate_to->rate;
+        }else{
+            $data['currency']   = $data['account']->currency_code;
+            $data['currency_rate'] = 1;
+        }
+
         return view('account.show', compact('data'));
     }
 
